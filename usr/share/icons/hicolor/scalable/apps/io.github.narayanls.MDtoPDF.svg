@@ -1,30 +1,116 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-  <defs>
-    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#ebebe8"/>
-    </linearGradient>
-    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ed333b"/>
-      <stop offset="1" stop-color="#c01c28"/>
-    </linearGradient>
-  </defs>
-  <!-- sombra -->
-  <path d="M28 14h56l24 24v80a6 6 0 0 1-6 6H28a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6z" fill="#000" opacity=".12"/>
-  <!-- folha -->
-  <path d="M28 10h56l24 24v80a6 6 0 0 1-6 6H28a6 6 0 0 1-6-6V16a6 6 0 0 1 6-6z" fill="url(#paper)" stroke="#c0bfbc" stroke-width="2"/>
-  <!-- dobra -->
-  <path d="M84 10v18a6 6 0 0 0 6 6h18z" fill="#deddda" stroke="#c0bfbc" stroke-width="2" stroke-linejoin="round"/>
-  <!-- marca do Markdown (CC0, github.com/dcurtis/markdown-mark) -->
-  <g transform="translate(33 38) scale(.3)">
-    <rect x="5" y="5" width="198" height="118" rx="15" fill="#3d3846"/>
-    <path d="M30 98V30h20l20 25 20-25h20v68H90V59L70 84 50 59v39zm125 0l-30-33h20V30h20v35h20z" fill="#fff"/>
-  </g>
-  <!-- faixa PDF -->
-  <rect x="30" y="82" width="70" height="26" rx="6" fill="url(#red)"/>
-  <g fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 0)">
-    <path d="M42 101V89h6a3.5 3.5 0 0 1 0 7h-6"/>
-    <path d="M58 89v12h4a6 6 0 0 0 0-12z"/>
-    <path d="M76 101V89h9M76 95h7"/>
-  </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   sodipodi:docname="io.github.narayanls.MouseRemapper.svg"
+   xml:space="preserve"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   inkscape:export-filename="/home/narayans/Github/MDtoPDF/usr/share/icons/hicolor/scalable/apps/io.github.narayanls.MDtoPDF.svg"
+   inkscape:export-xdpi="960"
+   inkscape:export-ydpi="960"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1"><linearGradient
+       x1="22.1875"
+       y1="23.0625"
+       x2="5.318624"
+       y2="5.3239861"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.75)"
+       spreadMethod="pad"
+       id="linearGradient3"><stop
+         style="stop-opacity:1;stop-color:#f4d7d7"
+         offset="0"
+         id="stop1" /><stop
+         style="stop-opacity:1;stop-color:#b3b3b3"
+         offset="0.997054"
+         id="stop2" /><stop
+         style="stop-opacity:1;stop-color:#ff0000"
+         offset="1"
+         id="stop3" /></linearGradient><linearGradient
+       id="red"
+       x1="18.283482"
+       y1="134.54768"
+       x2="18.283482"
+       y2="177.20913"
+       gradientTransform="matrix(0.23555084,0,0,0.08749031,2.6688392,2.4535047)"
+       gradientUnits="userSpaceOnUse"><stop
+         offset="0"
+         stop-color="#ed333b"
+         id="stop3-7" /><stop
+         offset="1"
+         stop-color="#c01c28"
+         id="stop4" /></linearGradient></defs><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="5.7484473"
+     inkscape:cx="-32.704483"
+     inkscape:cy="3.3922203"
+     inkscape:window-width="1920"
+     inkscape:window-height="1005"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g1"><inkscape:page
+       x="0"
+       y="0"
+       width="24"
+       height="24"
+       id="page2"
+       margin="0"
+       bleed="0" /></sodipodi:namedview><g
+     id="g1"
+     inkscape:groupmode="layer"
+     inkscape:label="1"><path
+       id="path3"
+       d="m 5.699,0.75 h 6.602 c 2.742,0 4.949,2.207 4.949,4.949 v 6.602 c 0,2.742 -2.207,4.949 -4.949,4.949 H 5.699 C 2.957,17.25 0.75,15.043 0.75,12.301 V 5.699 C 0.75,2.957 2.957,0.75 5.699,0.75 Z"
+       style="fill:url(#linearGradient3);stroke:none"
+       transform="scale(1.3333333)" /><g
+       id="g2"
+       transform="matrix(1.251675,0,0,1.251675,-3.0201,-4.3228228)"><g
+         transform="matrix(0.0430669,0,0,0.0430669,7.4061978,7.9086449)"
+         id="g7"><rect
+           x="5"
+           y="5"
+           width="198"
+           height="118"
+           rx="15"
+           fill="#3d3846"
+           id="rect6" /><path
+           d="M 30,98 V 30 H 50 L 70,55 90,30 h 20 V 98 H 90 V 59 L 70,84 50,59 v 39 z m 125,0 -30,-33 h 20 V 30 h 20 v 35 h 20 z"
+           fill="#ffffff"
+           id="path7" /></g><rect
+         x="6.9755287"
+         y="14.225123"
+         width="10.048943"
+         height="3.7324643"
+         rx="0.8613379"
+         fill="url(#red)"
+         id="rect7"
+         style="fill:url(#red);stroke-width:0.143556" /><g
+         fill="none"
+         stroke="#ffffff"
+         stroke-width="4.2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         transform="matrix(0.14355632,0,0,0.14355632,3.2430645,2.4535047)"
+         id="g10"><path
+           d="M 42,101 V 89 h 6 a 3.5,3.5 0 0 1 0,7 h -6"
+           id="path8" /><path
+           d="m 58,89 v 12 h 4 a 6,6 0 0 0 0,-12 z"
+           id="path9" /><path
+           d="M 76,101 V 89 h 9 m -9,6 h 7"
+           id="path10" /></g></g></g></svg>

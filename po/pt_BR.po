@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-to-pdf 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/narayanls/MDtoPDF/issues\n"
-"POT-Creation-Date: 2026-11-24 15:24-0300\n"
+"POT-Creation-Date: 2026-11-24 15:44-0300\n"
 "PO-Revision-Date: 2026-11-24 15:22-0300\n"
 "Last-Translator: narayanls\n"
 "Language-Team: Portuguese (Brazil)\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: usr/share/md-to-pdf/core/converter.py:111
-#: usr/share/md-to-pdf/ui/window.py:233
+#: usr/share/md-to-pdf/ui/window.py:309
 #, python-brace-format
 msgid "The file {name} was not found."
 msgstr "O arquivo {name} não foi encontrado."
@@ -49,31 +49,31 @@ msgstr "Cuidado"
 msgid "Contents"
 msgstr "Sumário"
 
-#: usr/share/md-to-pdf/core/converter.py:357
+#: usr/share/md-to-pdf/core/converter.py:362
 #, python-brace-format
 msgid "The custom stylesheet {name} was not found."
 msgstr "A folha de estilo personalizada {name} não foi encontrada."
 
-#: usr/share/md-to-pdf/core/converter.py:384
+#: usr/share/md-to-pdf/core/converter.py:389
 #, python-brace-format
 msgid "Could not load the image {name}."
 msgstr "Não foi possível carregar a imagem {name}."
 
-#: usr/share/md-to-pdf/core/converter.py:386
+#: usr/share/md-to-pdf/core/converter.py:391
 #, python-brace-format
 msgid "Could not load the stylesheet {name}."
 msgstr "Não foi possível carregar a folha de estilo {name}."
 
-#: usr/share/md-to-pdf/core/converter.py:398
+#: usr/share/md-to-pdf/core/converter.py:403
 msgid "WeasyPrint is not installed (package python-weasyprint)."
 msgstr "O WeasyPrint não está instalado (pacote python-weasyprint)."
 
-#: usr/share/md-to-pdf/core/converter.py:409
+#: usr/share/md-to-pdf/core/converter.py:414
 #, python-brace-format
 msgid "Could not create the PDF: {error}"
 msgstr "Não foi possível criar o PDF: {error}"
 
-#: usr/share/md-to-pdf/core/converter.py:435
+#: usr/share/md-to-pdf/core/converter.py:440
 #, python-brace-format
 msgid "Could not save {name}: {error}"
 msgstr "Não foi possível salvar {name}: {error}"
@@ -138,7 +138,8 @@ msgid ""
 "\n"
 "  -e, --export FILE.md…  convert to PDF without opening the window\n"
 "  -o, --output FILE.pdf  output file (with a single input file)\n"
-"  -d, --debug            detailed log in the terminal and in ~/.cache/md-to-pdf/debug.log\n"
+"  -d, --debug            detailed log in the terminal and in ~/.cache/md-to-"
+"pdf/debug.log\n"
 "  -v, --version          show the version\n"
 "  -h, --help             show this help\n"
 "\n"
@@ -149,8 +150,10 @@ msgstr ""
 "Uso: md-to-pdf [opções] [ARQUIVO.md]\n"
 "\n"
 "  -e, --export ARQUIVO.md…  converte para PDF sem abrir a janela\n"
-"  -o, --output ARQUIVO.pdf  arquivo de saída (com um único arquivo de entrada)\n"
-"  -d, --debug               log detalhado no terminal e em ~/.cache/md-to-pdf/debug.log\n"
+"  -o, --output ARQUIVO.pdf  arquivo de saída (com um único arquivo de "
+"entrada)\n"
+"  -d, --debug               log detalhado no terminal e em ~/.cache/md-to-"
+"pdf/debug.log\n"
 "  -v, --version             mostra a versão\n"
 "  -h, --help                mostra esta ajuda\n"
 "\n"
@@ -169,7 +172,7 @@ msgstr "--output só funciona com um único arquivo de entrada."
 msgid "Saved {path}"
 msgstr "{path} salvo"
 
-#: usr/share/md-to-pdf/ui/dialogs.py:24 usr/share/md-to-pdf/ui/window.py:86
+#: usr/share/md-to-pdf/ui/dialogs.py:24 usr/share/md-to-pdf/ui/window.py:88
 msgid "Preferences"
 msgstr "Preferências"
 
@@ -383,8 +386,8 @@ msgstr ""
 
 #: usr/share/md-to-pdf/ui/updates.py:113
 msgid ""
-"Automatic installation requires pacman (Arch Linux). Download the new version"
-" from GitHub."
+"Automatic installation requires pacman (Arch Linux). Download the new "
+"version from GitHub."
 msgstr ""
 "A instalação automática precisa do pacman (Arch Linux). Baixe a versão nova "
 "no GitHub."
@@ -431,8 +434,8 @@ msgstr "Baixando a versão {version}…"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: usr/share/md-to-pdf/ui/updates.py:206 usr/share/md-to-pdf/ui/window.py:366
-#: usr/share/md-to-pdf/ui/window.py:465
+#: usr/share/md-to-pdf/ui/updates.py:206 usr/share/md-to-pdf/ui/window.py:451
+#: usr/share/md-to-pdf/ui/window.py:565
 #, python-brace-format
 msgid "Unexpected error: {error}"
 msgstr "Erro inesperado: {error}"
@@ -468,129 +471,168 @@ msgstr ""
 msgid "Restart now"
 msgstr "Reiniciar agora"
 
-#: usr/share/md-to-pdf/ui/window.py:70 usr/share/md-to-pdf/ui/window.py:479
+#: usr/share/md-to-pdf/ui/window.py:72 usr/share/md-to-pdf/ui/window.py:579
 msgid "Open"
 msgstr "Abrir"
 
-#: usr/share/md-to-pdf/ui/window.py:71
+#: usr/share/md-to-pdf/ui/window.py:73
 msgid "Open a Markdown file (Ctrl+O)"
 msgstr "Abrir um arquivo Markdown (Ctrl+O)"
 
-#: usr/share/md-to-pdf/ui/window.py:72
+#: usr/share/md-to-pdf/ui/window.py:74
 msgid "Recent files"
 msgstr "Arquivos recentes"
 
-#: usr/share/md-to-pdf/ui/window.py:82
+#: usr/share/md-to-pdf/ui/window.py:84
 msgid "Reload"
 msgstr "Recarregar"
 
-#: usr/share/md-to-pdf/ui/window.py:83
+#: usr/share/md-to-pdf/ui/window.py:85
 msgid "Open With Another App…"
 msgstr "Abrir com outro aplicativo…"
 
-#: usr/share/md-to-pdf/ui/window.py:87
+#: usr/share/md-to-pdf/ui/window.py:89
 msgid "Check for updates"
 msgstr "Verificar atualizações"
 
-#: usr/share/md-to-pdf/ui/window.py:88
+#: usr/share/md-to-pdf/ui/window.py:90
 msgid "About MDtoPDF"
 msgstr "Sobre o MDtoPDF"
 
-#: usr/share/md-to-pdf/ui/window.py:91
+#: usr/share/md-to-pdf/ui/window.py:93
 msgid "Main menu"
 msgstr "Menu principal"
 
-#: usr/share/md-to-pdf/ui/window.py:95
+#: usr/share/md-to-pdf/ui/window.py:97
 msgid "PDF options (F9)"
 msgstr "Opções do PDF (F9)"
 
-#: usr/share/md-to-pdf/ui/window.py:98 usr/share/md-to-pdf/ui/window.py:417
-#: usr/share/md-to-pdf/ui/window.py:472
+#: usr/share/md-to-pdf/ui/window.py:100 usr/share/md-to-pdf/ui/window.py:506
+#: usr/share/md-to-pdf/ui/window.py:572
 msgid "Export PDF"
 msgstr "Exportar PDF"
 
-#: usr/share/md-to-pdf/ui/window.py:99
+#: usr/share/md-to-pdf/ui/window.py:101
 msgid "Save the PDF (Ctrl+E)"
 msgstr "Salvar o PDF (Ctrl+E)"
 
-#: usr/share/md-to-pdf/ui/window.py:105
+#: usr/share/md-to-pdf/ui/window.py:107
 msgid "Updating the preview…"
 msgstr "Atualizando a prévia…"
 
-#: usr/share/md-to-pdf/ui/window.py:116 usr/share/md-to-pdf/ui/window.py:192
+#: usr/share/md-to-pdf/ui/window.py:118 usr/share/md-to-pdf/ui/window.py:205
 msgid "Open a Markdown file"
 msgstr "Abra um arquivo Markdown"
 
-#: usr/share/md-to-pdf/ui/window.py:117
+#: usr/share/md-to-pdf/ui/window.py:119
 msgid ""
-"Drag a .md file here or click Open. The preview updates by itself whenever "
-"the file is saved."
+"Drag a .md file here, click Open or paste Markdown text with Ctrl+V. The "
+"preview updates by itself whenever the file is saved."
 msgstr ""
-"Arraste um arquivo .md para cá ou clique em Abrir. A prévia se atualiza "
-"sozinha sempre que o arquivo é salvo."
+"Arraste um arquivo .md para cá, clique em Abrir ou cole um texto Markdown "
+"com Ctrl+V. A prévia se atualiza sozinha sempre que o arquivo é salvo."
 
-#: usr/share/md-to-pdf/ui/window.py:120
+#: usr/share/md-to-pdf/ui/window.py:122
 msgid "Open File…"
 msgstr "Abrir arquivo…"
 
-#: usr/share/md-to-pdf/ui/window.py:193
+#: usr/share/md-to-pdf/ui/window.py:126
+msgid "Paste Text"
+msgstr "Colar texto"
+
+#: usr/share/md-to-pdf/ui/window.py:128
+msgid "Paste Markdown text from the clipboard (Ctrl+V)"
+msgstr "Colar texto Markdown da área de transferência (Ctrl+V)"
+
+#: usr/share/md-to-pdf/ui/window.py:206
 msgid "Markdown files"
 msgstr "Arquivos Markdown"
 
-#: usr/share/md-to-pdf/ui/window.py:198
+#: usr/share/md-to-pdf/ui/window.py:211
 msgid "All files"
 msgstr "Todos os arquivos"
 
-#: usr/share/md-to-pdf/ui/window.py:218
+#: usr/share/md-to-pdf/ui/window.py:231 usr/share/md-to-pdf/ui/window.py:270
 msgid "Only local files can be opened."
 msgstr "Só é possível abrir arquivos deste computador."
 
-#: usr/share/md-to-pdf/ui/window.py:282
+#: usr/share/md-to-pdf/ui/window.py:264
+#, python-brace-format
+msgid "Could not read the clipboard: {error}"
+msgstr "Não foi possível ler a área de transferência: {error}"
+
+#: usr/share/md-to-pdf/ui/window.py:279
+msgid "The clipboard has no text to paste."
+msgstr "A área de transferência não tem texto para colar."
+
+#: usr/share/md-to-pdf/ui/window.py:299
+#, python-brace-format
+msgid "Could not save the pasted text: {error}"
+msgstr "Não foi possível guardar o texto colado: {error}"
+
+#: usr/share/md-to-pdf/ui/window.py:358 usr/share/md-to-pdf/ui/window.py:458
+#: usr/share/md-to-pdf/ui/window.py:517
+msgid "Pasted text"
+msgstr "Texto colado"
+
+#: usr/share/md-to-pdf/ui/window.py:360
+msgid "Clipboard"
+msgstr "Área de transferência"
+
+#: usr/share/md-to-pdf/ui/window.py:363
 #, python-brace-format
 msgid "{n} page"
 msgid_plural "{n} pages"
 msgstr[0] "{n} página"
 msgstr[1] "{n} páginas"
 
-#: usr/share/md-to-pdf/ui/window.py:297
+#: usr/share/md-to-pdf/ui/window.py:370
+msgid "Paste from Clipboard"
+msgstr "Colar da área de transferência"
+
+#: usr/share/md-to-pdf/ui/window.py:381
 msgid "No recent files"
 msgstr "Nenhum arquivo recente"
 
-#: usr/share/md-to-pdf/ui/window.py:301
+#: usr/share/md-to-pdf/ui/window.py:385
 msgid "Clear List"
 msgstr "Limpar lista"
 
-#: usr/share/md-to-pdf/ui/window.py:321
+#: usr/share/md-to-pdf/ui/window.py:405
 #, python-brace-format
 msgid "Could not open the file: {error}"
 msgstr "Não foi possível abrir o arquivo: {error}"
 
-#: usr/share/md-to-pdf/ui/window.py:385
+#: usr/share/md-to-pdf/ui/window.py:473
 #, python-brace-format
 msgid "Could not show the preview: {error}"
 msgstr "Não foi possível mostrar a prévia: {error}"
 
-#: usr/share/md-to-pdf/ui/window.py:402
+#: usr/share/md-to-pdf/ui/window.py:491
 msgid "Try Again"
 msgstr "Tentar de novo"
 
-#: usr/share/md-to-pdf/ui/window.py:402
+#: usr/share/md-to-pdf/ui/window.py:491
 msgid "Hide"
 msgstr "Ocultar"
 
-#: usr/share/md-to-pdf/ui/window.py:418
+#: usr/share/md-to-pdf/ui/window.py:507
 msgid "PDF documents"
 msgstr "Documentos PDF"
 
-#: usr/share/md-to-pdf/ui/window.py:437
+#: usr/share/md-to-pdf/ui/window.py:518
+msgid "document"
+msgstr "documento"
+
+#: usr/share/md-to-pdf/ui/window.py:535
 msgid "Choose a folder on this computer."
 msgstr "Escolha uma pasta deste computador."
 
-#: usr/share/md-to-pdf/ui/window.py:450
+#: usr/share/md-to-pdf/ui/window.py:548
 msgid "Exporting…"
 msgstr "Exportando…"
 
-#: usr/share/md-to-pdf/ui/window.py:478
+#: usr/share/md-to-pdf/ui/window.py:578
 #, python-brace-format
 msgid "Saved {name}"
 msgstr "{name} salvo"
