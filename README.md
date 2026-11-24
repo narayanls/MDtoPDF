@@ -124,39 +124,6 @@ O app verifica o último release do GitHub ao abrir (dá para desligar em **Menu
 
 Rodando a partir do código-fonte, o app só avisa da versão nova e aponta para o GitHub.
 
-### Publicar uma versão
-
-1. Atualize `APP_VERSION` em `usr/share/md-to-pdf/core/__init__.py` (o PKGBUILD lê a versão de lá).
-2. Gere o pacote: `cd pkgbuild && makepkg -f`.
-3. Crie um release no GitHub com a tag `v<versão>` (ex.: `v1.0.1`), escreva as novidades na descrição e anexe o arquivo `md-to-pdf-<versão>-1-any.pkg.tar.zst`.
-
-As novidades aparecem no diálogo de atualização. Para publicar só uma correção do pacote, aumente o `pkgrel` no PKGBUILD: o atualizador também compara o `pkgrel`.
-
-## Traduções
-
-Os textos estão em inglês no código e as traduções ficam em `po/`.
-
-```sh
-make update-po   # atualiza po/pt_BR.po com os textos novos do código
-make stats       # mostra quantos textos estão traduzidos
-make             # compila os .mo para rodar sem instalar
-```
-
-Para adicionar um idioma: `msginit -i po/md-to-pdf.pot -l <código> -o po/<código>.po` e acrescente o código em `po/LINGUAS`.
-
-## Estrutura
-
-```
-usr/bin/md-to-pdf                      lançador
-usr/share/md-to-pdf/main.py            ponto de entrada e linha de comando
-usr/share/md-to-pdf/core/              sem GTK: conversão, CSS do PDF, preferências, traduções, atualizador
-usr/share/md-to-pdf/ui/                GTK 4 + libadwaita: janela, prévia, opções, diálogos, atualizador
-usr/share/applications/                atalho do menu
-usr/share/icons/                       ícone
-po/                                    traduções
-pkgbuild/PKGBUILD                      pacote do Arch
-```
-
 ## Licença
 
 GPL-3.0-or-later. Veja [LICENSE](LICENSE).
