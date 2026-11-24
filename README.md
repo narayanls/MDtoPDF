@@ -133,7 +133,7 @@ Rodando a partir do código-fonte, o app só avisa da versão nova e aponta para
 - [Python 3](https://www.python.org) + [PyGObject](https://pygobject.gnome.org)
 - [GTK4](https://gtk.org) + [Adwaita (libadwaita)](https://gnome.pages.gitlab.gnome.org/libadwaita/)
 - Vibe Coding:
-  Claude Sonnet foi usada para geração de código. O programa foi revisado e testado por humano
+  Claude Opus foi usada para geração de código. O programa foi revisado e testado por humano
 
 ## Licença
 
