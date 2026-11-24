@@ -8,6 +8,10 @@ A janela mostra uma **prévia do próprio PDF**, página por página, e ela se a
 
 Interface em português (pt-BR) e em inglês para sistemas em outros idiomas.
 
+
+<img width="951" height="1028" alt="satty-20261124-161619" src="https://github.com/user-attachments/assets/4bbf5b18-deaa-4ade-a563-a88d782ca294" />
+
+
 ## Recursos
 
 - Prévia fiel: o que aparece na janela é exatamente o PDF que será exportado.
