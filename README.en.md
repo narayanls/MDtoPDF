@@ -124,6 +124,12 @@ The app checks the latest GitHub release when it opens (this can be turned off i
 
 When running from source, the app only announces the new version and points to GitHub.
 
+## 🛠️ Build with
+
+- [Python 3](https://www.python.org) + [PyGObject](https://pygobject.gnome.org)
+- [GTK4](https://gtk.org) + [Adwaita (libadwaita)](https://gnome.pages.gitlab.gnome.org/libadwaita/)
+- Vibe Coding:
+  Claude Sonnet was used for generate code. MDtoPDF was revised and tested by humans.
 
 ## License
 
