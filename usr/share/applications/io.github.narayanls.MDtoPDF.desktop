@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+Name=MDtoPDF
+GenericName=Markdown to PDF Converter
+GenericName[pt_BR]=Conversor de Markdown para PDF
+Comment=Preview Markdown files and export them as formatted PDFs
+Comment[pt_BR]=Visualize arquivos Markdown e exporte-os como PDFs formatados
+Keywords=markdown;md;pdf;export;convert;document;
+Keywords[pt_BR]=markdown;md;pdf;exportar;converter;documento;
+Exec=md-to-pdf %f
+TryExec=md-to-pdf
+Terminal=false
+Icon=io.github.narayanls.MDtoPDF
+Categories=Office;Utility;GTK;
+MimeType=text/markdown;text/x-markdown;
+StartupNotify=true
+StartupWMClass=io.github.narayanls.MDtoPDF

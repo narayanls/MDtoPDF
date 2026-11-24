@@ -1,74 +1,62 @@
 # Maintainer: Narayan Lima da Silva <narayan.song@gmail.com>
 
-pkgname=
-pkgdesc=""
-# Uncomment and edit the following lines as needed
-depends=('')
-#makedepends=('')
-#optdepends=(
-    
-)
-#conflicts=('')
-#provides=('')
-#replaces=('')
-pkgver=$(date +%y.%m.%d)
-pkgrel=$(date +%H%M)
+pkgname=md-to-pdf
+# A versão vem de APP_VERSION (usr/share/md-to-pdf/core/__init__.py), para o
+# pacote e o app nunca ficarem com números diferentes.
+pkgver=$(sed -n 's/^APP_VERSION = "\(.*\)"/\1/p' "${startdir:-.}/../usr/share/md-to-pdf/core/__init__.py")
+pkgrel=1
+pkgdesc="Lê arquivos Markdown e exporta o conteúdo formatado em PDF (GTK 4)"
 arch=('any')
-license=('MIT')
-url="https://github.com/narayanls/${pkgname}"
-source=("git+${url}.git")
-md5sums=('SKIP')
+url="https://github.com/narayanls/MDtoPDF"
+license=('GPL-3.0-or-later')
+depends=(
+    'python'
+    'python-gobject'
+    'python-cairo'
+    'gtk4'
+    'libadwaita'
+    'poppler-glib'
+    'python-weasyprint'
+    'python-markdown-it-py'
+    'python-mdit_py_plugins'
+    'python-pygments'
+)
+makedepends=('gettext')
+optdepends=(
+    'python-linkify-it-py: transforma URLs soltas no texto em links'
+    'noto-fonts: fontes usadas pelos estilos do PDF'
+    'noto-fonts-emoji: emojis coloridos no PDF'
+)
+source=()
+sha256sums=()
 
-# Automatically detect and use the correct install file
-if [ -e "${pkgname}.install" ]; then
-    install=${pkgname}.install
-elif [ -e "pkgbuild.install" ]; then
-    install=pkgbuild.install
-fi
-
-prepare() {
-    cd "${srcdir}/${pkgname}"
-    # Add any preparation steps here, if needed
-    # For example: patch -p1 < "${srcdir}/patch-file.patch"
-}
-
-build() {
-    cd "${srcdir}/${pkgname}"
-    # Add build steps here, if needed
-    # For example: make
-}
-
-check() {
-    cd "${srcdir}/${pkgname}"
-    # Add check/test steps here, if needed
-    # For example: make check
-}
-
+# Empacota a árvore usr/ que está ao lado desta pasta (MDtoPDF/usr).
+# Uso: cd pkgbuild && makepkg -si
 package() {
-    cd "${srcdir}/${pkgname}"
+    local root="$startdir/.."
+    local src="$root/usr"
 
-    # Determine the correct source directory
-    if [ -d "${pkgname}" ]; then
-        srcdir="${srcdir}/${pkgname}/${pkgname}"
-    else
-        srcdir="${srcdir}/${pkgname}"
-    fi
-
-    # Install files
-    local dirs=("usr" "etc" "opt")
-    for dir in "${dirs[@]}"; do
-        if [ -d "${srcdir}/${dir}" ]; then
-            cp -a "${srcdir}/${dir}" "${pkgdir}/"
-        fi
+    # Copia tudo, ignorando caches de bytecode e traduções compiladas em desenvolvimento
+    (cd "$src" && find . -type f ! -path '*/__pycache__/*' ! -name '*.pyc' ! -name '*.mo') |
+    while IFS= read -r file; do
+        install -Dm644 "$src/$file" "$pkgdir/usr/$file"
     done
 
-    # Install license file if present
-    if [ -f "LICENSE" ]; then
-        install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    fi
+    chmod 755 "$pkgdir/usr/bin/$pkgname"
 
-    # Install documentation if present
-    if [ -f "README.md" ]; then
-        install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
-    fi
+    # Compila as traduções (po/*.po → /usr/share/locale/<idioma>/LC_MESSAGES/*.mo)
+    local po lang
+    for po in "$root"/po/*.po; do
+        lang=$(basename "$po" .po)
+        install -dm755 "$pkgdir/usr/share/locale/$lang/LC_MESSAGES"
+        msgfmt --check -o "$pkgdir/usr/share/locale/$lang/LC_MESSAGES/$pkgname.mo" "$po"
+    done
+
+    install -Dm644 "$root/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -Dm644 "$root/README.md" "$pkgdir/usr/share/doc/$pkgname/README.md"
+    install -Dm644 "$root/README.en.md" "$pkgdir/usr/share/doc/$pkgname/README.en.md"
+    install -Dm644 "$root/examples/demo.md" "$pkgdir/usr/share/doc/$pkgname/examples/demo.md"
+
+    # Pré-compila o bytecode com os caminhos finais
+    python -m compileall -q -d "/usr/share/$pkgname" "$pkgdir/usr/share/$pkgname"
 }

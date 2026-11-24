@@ -1,0 +1,596 @@
+# Portuguese (Brazil) translation for MDtoPDF.
+# This file is distributed under the same license as the md-to-pdf package.
+msgid ""
+msgstr ""
+"Project-Id-Version: md-to-pdf 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/narayanls/MDtoPDF/issues\n"
+"POT-Creation-Date: 2026-11-24 15:24-0300\n"
+"PO-Revision-Date: 2026-11-24 15:22-0300\n"
+"Last-Translator: narayanls\n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: usr/share/md-to-pdf/core/converter.py:111
+#: usr/share/md-to-pdf/ui/window.py:233
+#, python-brace-format
+msgid "The file {name} was not found."
+msgstr "O arquivo {name} não foi encontrado."
+
+#: usr/share/md-to-pdf/core/converter.py:113
+#, python-brace-format
+msgid "Could not read {name}: {error}"
+msgstr "Não foi possível ler {name}: {error}"
+
+#: usr/share/md-to-pdf/core/converter.py:171
+msgid "Note"
+msgstr "Nota"
+
+#: usr/share/md-to-pdf/core/converter.py:172
+msgid "Tip"
+msgstr "Dica"
+
+#: usr/share/md-to-pdf/core/converter.py:173
+msgid "Important"
+msgstr "Importante"
+
+#: usr/share/md-to-pdf/core/converter.py:174
+msgid "Warning"
+msgstr "Atenção"
+
+#: usr/share/md-to-pdf/core/converter.py:175
+msgid "Caution"
+msgstr "Cuidado"
+
+#: usr/share/md-to-pdf/core/converter.py:302
+msgid "Contents"
+msgstr "Sumário"
+
+#: usr/share/md-to-pdf/core/converter.py:357
+#, python-brace-format
+msgid "The custom stylesheet {name} was not found."
+msgstr "A folha de estilo personalizada {name} não foi encontrada."
+
+#: usr/share/md-to-pdf/core/converter.py:384
+#, python-brace-format
+msgid "Could not load the image {name}."
+msgstr "Não foi possível carregar a imagem {name}."
+
+#: usr/share/md-to-pdf/core/converter.py:386
+#, python-brace-format
+msgid "Could not load the stylesheet {name}."
+msgstr "Não foi possível carregar a folha de estilo {name}."
+
+#: usr/share/md-to-pdf/core/converter.py:398
+msgid "WeasyPrint is not installed (package python-weasyprint)."
+msgstr "O WeasyPrint não está instalado (pacote python-weasyprint)."
+
+#: usr/share/md-to-pdf/core/converter.py:409
+#, python-brace-format
+msgid "Could not create the PDF: {error}"
+msgstr "Não foi possível criar o PDF: {error}"
+
+#: usr/share/md-to-pdf/core/converter.py:435
+#, python-brace-format
+msgid "Could not save {name}: {error}"
+msgstr "Não foi possível salvar {name}: {error}"
+
+#: usr/share/md-to-pdf/core/updater.py:122
+msgid "No release has been published yet."
+msgstr "Nenhum release foi publicado ainda."
+
+#: usr/share/md-to-pdf/core/updater.py:124
+msgid "GitHub is limiting requests right now. Try again later."
+msgstr "O GitHub está limitando as consultas agora. Tente mais tarde."
+
+#: usr/share/md-to-pdf/core/updater.py:125
+#, python-brace-format
+msgid "Could not check for updates (HTTP {code})."
+msgstr "Não foi possível verificar atualizações (HTTP {code})."
+
+#: usr/share/md-to-pdf/core/updater.py:129
+msgid "Could not check for updates. Check your internet connection."
+msgstr ""
+"Não foi possível verificar atualizações. Confira sua conexão com a internet."
+
+#: usr/share/md-to-pdf/core/updater.py:151
+msgid "The latest release has no version number."
+msgstr "O último release não tem número de versão."
+
+#: usr/share/md-to-pdf/core/updater.py:177
+msgid "This release has no package to install."
+msgstr "Este release não tem pacote para instalar."
+
+#: usr/share/md-to-pdf/core/updater.py:207
+msgid "The download failed. Check your internet connection."
+msgstr "O download falhou. Confira sua conexão com a internet."
+
+#: usr/share/md-to-pdf/core/updater.py:211
+msgid "The download is incomplete. Try again."
+msgstr "O download ficou incompleto. Tente de novo."
+
+#: usr/share/md-to-pdf/core/updater.py:214
+msgid "The downloaded file is corrupted (checksum mismatch). Try again."
+msgstr ""
+"O arquivo baixado está corrompido (checksum não confere). Tente de novo."
+
+#: usr/share/md-to-pdf/core/updater.py:223
+msgid "Automatic installation requires pacman and pkexec."
+msgstr "A instalação automática precisa do pacman e do pkexec."
+
+#: usr/share/md-to-pdf/core/updater.py:233
+msgid "Authorization was not granted."
+msgstr "A autorização não foi concedida."
+
+#: usr/share/md-to-pdf/core/updater.py:236
+msgid "pacman could not install the update:"
+msgstr "O pacman não conseguiu instalar a atualização:"
+
+#: usr/share/md-to-pdf/main.py:18
+#, python-brace-format
+msgid ""
+"{app} {version}\n"
+"\n"
+"Usage: md-to-pdf [options] [FILE.md]\n"
+"\n"
+"  -e, --export FILE.md…  convert to PDF without opening the window\n"
+"  -o, --output FILE.pdf  output file (with a single input file)\n"
+"  -d, --debug            detailed log in the terminal and in ~/.cache/md-to-pdf/debug.log\n"
+"  -v, --version          show the version\n"
+"  -h, --help             show this help\n"
+"\n"
+"The PDF options (paper, margins, style…) are the ones chosen in the app.\n"
+msgstr ""
+"{app} {version}\n"
+"\n"
+"Uso: md-to-pdf [opções] [ARQUIVO.md]\n"
+"\n"
+"  -e, --export ARQUIVO.md…  converte para PDF sem abrir a janela\n"
+"  -o, --output ARQUIVO.pdf  arquivo de saída (com um único arquivo de entrada)\n"
+"  -d, --debug               log detalhado no terminal e em ~/.cache/md-to-pdf/debug.log\n"
+"  -v, --version             mostra a versão\n"
+"  -h, --help                mostra esta ajuda\n"
+"\n"
+"As opções do PDF (papel, margens, estilo…) são as escolhidas no app.\n"
+
+#: usr/share/md-to-pdf/main.py:72
+msgid "No input file. Example: md-to-pdf --export notes.md"
+msgstr "Nenhum arquivo de entrada. Exemplo: md-to-pdf --export notas.md"
+
+#: usr/share/md-to-pdf/main.py:75
+msgid "--output only works with a single input file."
+msgstr "--output só funciona com um único arquivo de entrada."
+
+#: usr/share/md-to-pdf/main.py:91
+#, python-brace-format
+msgid "Saved {path}"
+msgstr "{path} salvo"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:24 usr/share/md-to-pdf/ui/window.py:86
+msgid "Preferences"
+msgstr "Preferências"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:28
+msgid "Updates"
+msgstr "Atualizações"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:30
+msgid "Check for updates on startup"
+msgstr "Verificar atualizações ao abrir"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:31
+msgid "Looks for a new release on GitHub when the app opens"
+msgstr "Procura um release novo no GitHub quando o app abre"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:38
+msgid "Language"
+msgstr "Idioma"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:40
+msgid "Automatic (system)"
+msgstr "Automático (sistema)"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:41
+msgid "Interface language"
+msgstr "Idioma da interface"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:42
+msgid "Takes effect after restarting the app"
+msgstr "Vale após reiniciar o aplicativo"
+
+#: usr/share/md-to-pdf/ui/dialogs.py:66
+msgid ""
+"Reads Markdown files and exports them as formatted PDFs, with a live preview "
+"of the result."
+msgstr ""
+"Lê arquivos Markdown e os exporta como PDFs formatados, com prévia do "
+"resultado em tempo real."
+
+#: usr/share/md-to-pdf/ui/dialogs.py:74
+msgid "Built with"
+msgstr "Feito com"
+
+#: usr/share/md-to-pdf/ui/options.py:27
+msgid "Page"
+msgstr "Página"
+
+#: usr/share/md-to-pdf/ui/options.py:28
+msgid "Paper size"
+msgstr "Tamanho do papel"
+
+#: usr/share/md-to-pdf/ui/options.py:29
+msgid "A4 (210 × 297 mm)"
+msgstr "A4 (210 × 297 mm)"
+
+#: usr/share/md-to-pdf/ui/options.py:30
+msgid "A5 (148 × 210 mm)"
+msgstr "A5 (148 × 210 mm)"
+
+#: usr/share/md-to-pdf/ui/options.py:31
+msgid "Letter (8.5 × 11 in)"
+msgstr "Carta (216 × 279 mm)"
+
+#: usr/share/md-to-pdf/ui/options.py:32
+msgid "Legal (8.5 × 14 in)"
+msgstr "Ofício (216 × 356 mm)"
+
+#: usr/share/md-to-pdf/ui/options.py:34
+msgid "Landscape"
+msgstr "Paisagem"
+
+#: usr/share/md-to-pdf/ui/options.py:35
+msgid "Margins"
+msgstr "Margens"
+
+#: usr/share/md-to-pdf/ui/options.py:36
+msgid "Narrow (12 mm)"
+msgstr "Estreitas (12 mm)"
+
+#: usr/share/md-to-pdf/ui/options.py:37
+msgid "Normal (20 mm)"
+msgstr "Normais (20 mm)"
+
+#: usr/share/md-to-pdf/ui/options.py:38
+msgid "Wide (30 mm)"
+msgstr "Largas (30 mm)"
+
+#: usr/share/md-to-pdf/ui/options.py:43
+msgid "Text"
+msgstr "Texto"
+
+#: usr/share/md-to-pdf/ui/options.py:44
+msgid "Style"
+msgstr "Estilo"
+
+#: usr/share/md-to-pdf/ui/options.py:45
+msgid "Clean (sans-serif)"
+msgstr "Limpo (sem serifa)"
+
+#: usr/share/md-to-pdf/ui/options.py:46
+msgid "Classic (serif, justified)"
+msgstr "Clássico (com serifa, justificado)"
+
+#: usr/share/md-to-pdf/ui/options.py:49
+msgid "Font size (pt)"
+msgstr "Tamanho da letra (pt)"
+
+#: usr/share/md-to-pdf/ui/options.py:57
+msgid "Content"
+msgstr "Conteúdo"
+
+#: usr/share/md-to-pdf/ui/options.py:58
+msgid "Table of contents"
+msgstr "Sumário"
+
+#: usr/share/md-to-pdf/ui/options.py:59
+msgid "Built from the headings, with page numbers"
+msgstr "Montado a partir dos títulos, com números de página"
+
+#: usr/share/md-to-pdf/ui/options.py:60
+msgid "Page numbers"
+msgstr "Números de página"
+
+#: usr/share/md-to-pdf/ui/options.py:60
+msgid "At the bottom of each page"
+msgstr "No rodapé de cada página"
+
+#: usr/share/md-to-pdf/ui/options.py:61
+msgid "Syntax highlighting"
+msgstr "Realce de sintaxe"
+
+#: usr/share/md-to-pdf/ui/options.py:62
+msgid "Colors code blocks that name a language (```python)"
+msgstr "Colore blocos de código que indicam a linguagem (```python)"
+
+#: usr/share/md-to-pdf/ui/options.py:63
+msgid "Level 1 headings on a new page"
+msgstr "Títulos de nível 1 em página nova"
+
+#: usr/share/md-to-pdf/ui/options.py:68
+msgid "Custom stylesheet"
+msgstr "Folha de estilo personalizada"
+
+#: usr/share/md-to-pdf/ui/options.py:69
+msgid "A CSS file applied on top of the chosen style."
+msgstr "Um arquivo CSS aplicado por cima do estilo escolhido."
+
+#: usr/share/md-to-pdf/ui/options.py:70
+msgid "CSS file"
+msgstr "Arquivo CSS"
+
+#: usr/share/md-to-pdf/ui/options.py:72
+msgid "Remove the stylesheet"
+msgstr "Remover a folha de estilo"
+
+#: usr/share/md-to-pdf/ui/options.py:76 usr/share/md-to-pdf/ui/options.py:145
+msgid "Choose a CSS file"
+msgstr "Escolher um arquivo CSS"
+
+#: usr/share/md-to-pdf/ui/options.py:85
+msgid "Restore defaults"
+msgstr "Restaurar padrões"
+
+#: usr/share/md-to-pdf/ui/options.py:126
+msgid "None"
+msgstr "Nenhum"
+
+#: usr/share/md-to-pdf/ui/options.py:146
+msgid "CSS stylesheets"
+msgstr "Folhas de estilo CSS"
+
+#: usr/share/md-to-pdf/ui/preview.py:55
+msgid "Zoom out (Ctrl+−)"
+msgstr "Diminuir zoom (Ctrl+−)"
+
+#: usr/share/md-to-pdf/ui/preview.py:57
+msgid "Fit to width (Ctrl+0)"
+msgstr "Ajustar à largura (Ctrl+0)"
+
+#: usr/share/md-to-pdf/ui/preview.py:61
+msgid "Zoom in (Ctrl++)"
+msgstr "Aumentar zoom (Ctrl++)"
+
+#: usr/share/md-to-pdf/ui/updates.py:39
+msgid "Checking for updates…"
+msgstr "Verificando atualizações…"
+
+#: usr/share/md-to-pdf/ui/updates.py:68
+#, python-brace-format
+msgid "You have the latest version ({version})."
+msgstr "Você já tem a versão mais recente ({version})."
+
+#: usr/share/md-to-pdf/ui/updates.py:97
+#, python-brace-format
+msgid "Version {new} is available. You have version {current}."
+msgstr "A versão {new} está disponível. Você tem a versão {current}."
+
+#: usr/share/md-to-pdf/ui/updates.py:102 usr/share/md-to-pdf/ui/updates.py:127
+#: usr/share/md-to-pdf/ui/updates.py:263
+msgid "View on GitHub"
+msgstr "Ver no GitHub"
+
+#: usr/share/md-to-pdf/ui/updates.py:111
+#, python-brace-format
+msgid ""
+"{app} is running from the source code, so it can't update itself. Download "
+"the new version from GitHub."
+msgstr ""
+"O {app} está rodando a partir do código-fonte, então não pode se atualizar "
+"sozinho. Baixe a versão nova no GitHub."
+
+#: usr/share/md-to-pdf/ui/updates.py:113
+msgid ""
+"Automatic installation requires pacman (Arch Linux). Download the new version"
+" from GitHub."
+msgstr ""
+"A instalação automática precisa do pacman (Arch Linux). Baixe a versão nova "
+"no GitHub."
+
+#: usr/share/md-to-pdf/ui/updates.py:115
+msgid ""
+"Automatic installation requires pkexec (polkit). Download the new version "
+"from GitHub."
+msgstr ""
+"A instalação automática precisa do pkexec (polkit). Baixe a versão nova no "
+"GitHub."
+
+#: usr/share/md-to-pdf/ui/updates.py:117
+msgid "This release has no package to install. Download it from GitHub."
+msgstr "Este release não tem pacote para instalar. Baixe-o no GitHub."
+
+#: usr/share/md-to-pdf/ui/updates.py:123
+msgid "Update available"
+msgstr "Atualização disponível"
+
+#: usr/share/md-to-pdf/ui/updates.py:126 usr/share/md-to-pdf/ui/updates.py:273
+msgid "Later"
+msgstr "Depois"
+
+#: usr/share/md-to-pdf/ui/updates.py:129
+msgid "Update"
+msgstr "Atualizar"
+
+#: usr/share/md-to-pdf/ui/updates.py:145
+msgid "What's new"
+msgstr "Novidades"
+
+#: usr/share/md-to-pdf/ui/updates.py:177
+#, python-brace-format
+msgid "Updating {app}"
+msgstr "Atualizando o {app}"
+
+#: usr/share/md-to-pdf/ui/updates.py:178
+#, python-brace-format
+msgid "Downloading version {version}…"
+msgstr "Baixando a versão {version}…"
+
+#: usr/share/md-to-pdf/ui/updates.py:180
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: usr/share/md-to-pdf/ui/updates.py:206 usr/share/md-to-pdf/ui/window.py:366
+#: usr/share/md-to-pdf/ui/window.py:465
+#, python-brace-format
+msgid "Unexpected error: {error}"
+msgstr "Erro inesperado: {error}"
+
+#: usr/share/md-to-pdf/ui/updates.py:222
+msgid "Installing… Enter your password if the system asks for it."
+msgstr "Instalando… Digite sua senha se o sistema pedir."
+
+#: usr/share/md-to-pdf/ui/updates.py:258
+msgid "Update cancelled"
+msgstr "Atualização cancelada"
+
+#: usr/share/md-to-pdf/ui/updates.py:261
+msgid "Update failed"
+msgstr "A atualização falhou"
+
+#: usr/share/md-to-pdf/ui/updates.py:262
+msgid "Close"
+msgstr "Fechar"
+
+#: usr/share/md-to-pdf/ui/updates.py:270
+msgid "Update installed"
+msgstr "Atualização instalada"
+
+#: usr/share/md-to-pdf/ui/updates.py:271
+#, python-brace-format
+msgid "{app} {version} was installed. Restart the app to use the new version."
+msgstr ""
+"O {app} {version} foi instalado. Reinicie o aplicativo para usar a versão "
+"nova."
+
+#: usr/share/md-to-pdf/ui/updates.py:274
+msgid "Restart now"
+msgstr "Reiniciar agora"
+
+#: usr/share/md-to-pdf/ui/window.py:70 usr/share/md-to-pdf/ui/window.py:479
+msgid "Open"
+msgstr "Abrir"
+
+#: usr/share/md-to-pdf/ui/window.py:71
+msgid "Open a Markdown file (Ctrl+O)"
+msgstr "Abrir um arquivo Markdown (Ctrl+O)"
+
+#: usr/share/md-to-pdf/ui/window.py:72
+msgid "Recent files"
+msgstr "Arquivos recentes"
+
+#: usr/share/md-to-pdf/ui/window.py:82
+msgid "Reload"
+msgstr "Recarregar"
+
+#: usr/share/md-to-pdf/ui/window.py:83
+msgid "Open With Another App…"
+msgstr "Abrir com outro aplicativo…"
+
+#: usr/share/md-to-pdf/ui/window.py:87
+msgid "Check for updates"
+msgstr "Verificar atualizações"
+
+#: usr/share/md-to-pdf/ui/window.py:88
+msgid "About MDtoPDF"
+msgstr "Sobre o MDtoPDF"
+
+#: usr/share/md-to-pdf/ui/window.py:91
+msgid "Main menu"
+msgstr "Menu principal"
+
+#: usr/share/md-to-pdf/ui/window.py:95
+msgid "PDF options (F9)"
+msgstr "Opções do PDF (F9)"
+
+#: usr/share/md-to-pdf/ui/window.py:98 usr/share/md-to-pdf/ui/window.py:417
+#: usr/share/md-to-pdf/ui/window.py:472
+msgid "Export PDF"
+msgstr "Exportar PDF"
+
+#: usr/share/md-to-pdf/ui/window.py:99
+msgid "Save the PDF (Ctrl+E)"
+msgstr "Salvar o PDF (Ctrl+E)"
+
+#: usr/share/md-to-pdf/ui/window.py:105
+msgid "Updating the preview…"
+msgstr "Atualizando a prévia…"
+
+#: usr/share/md-to-pdf/ui/window.py:116 usr/share/md-to-pdf/ui/window.py:192
+msgid "Open a Markdown file"
+msgstr "Abra um arquivo Markdown"
+
+#: usr/share/md-to-pdf/ui/window.py:117
+msgid ""
+"Drag a .md file here or click Open. The preview updates by itself whenever "
+"the file is saved."
+msgstr ""
+"Arraste um arquivo .md para cá ou clique em Abrir. A prévia se atualiza "
+"sozinha sempre que o arquivo é salvo."
+
+#: usr/share/md-to-pdf/ui/window.py:120
+msgid "Open File…"
+msgstr "Abrir arquivo…"
+
+#: usr/share/md-to-pdf/ui/window.py:193
+msgid "Markdown files"
+msgstr "Arquivos Markdown"
+
+#: usr/share/md-to-pdf/ui/window.py:198
+msgid "All files"
+msgstr "Todos os arquivos"
+
+#: usr/share/md-to-pdf/ui/window.py:218
+msgid "Only local files can be opened."
+msgstr "Só é possível abrir arquivos deste computador."
+
+#: usr/share/md-to-pdf/ui/window.py:282
+#, python-brace-format
+msgid "{n} page"
+msgid_plural "{n} pages"
+msgstr[0] "{n} página"
+msgstr[1] "{n} páginas"
+
+#: usr/share/md-to-pdf/ui/window.py:297
+msgid "No recent files"
+msgstr "Nenhum arquivo recente"
+
+#: usr/share/md-to-pdf/ui/window.py:301
+msgid "Clear List"
+msgstr "Limpar lista"
+
+#: usr/share/md-to-pdf/ui/window.py:321
+#, python-brace-format
+msgid "Could not open the file: {error}"
+msgstr "Não foi possível abrir o arquivo: {error}"
+
+#: usr/share/md-to-pdf/ui/window.py:385
+#, python-brace-format
+msgid "Could not show the preview: {error}"
+msgstr "Não foi possível mostrar a prévia: {error}"
+
+#: usr/share/md-to-pdf/ui/window.py:402
+msgid "Try Again"
+msgstr "Tentar de novo"
+
+#: usr/share/md-to-pdf/ui/window.py:402
+msgid "Hide"
+msgstr "Ocultar"
+
+#: usr/share/md-to-pdf/ui/window.py:418
+msgid "PDF documents"
+msgstr "Documentos PDF"
+
+#: usr/share/md-to-pdf/ui/window.py:437
+msgid "Choose a folder on this computer."
+msgstr "Escolha uma pasta deste computador."
+
+#: usr/share/md-to-pdf/ui/window.py:450
+msgid "Exporting…"
+msgstr "Exportando…"
+
+#: usr/share/md-to-pdf/ui/window.py:478
+#, python-brace-format
+msgid "Saved {name}"
+msgstr "{name} salvo"
