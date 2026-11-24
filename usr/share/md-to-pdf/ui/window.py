@@ -10,7 +10,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk  # noqa: E402
 
-from core import APP_NAME, converter  # noqa: E402
+from core import APP_NAME, converter, pasted  # noqa: E402
 from core.debuglog import log  # noqa: E402
 from core.i18n import _, ngettext  # noqa: E402
 
@@ -42,6 +42,7 @@ class MainWindow(Adw.ApplicationWindow):
         self.settings = settings
         self.busy = False            # exportando; o atualizador espera para mostrar o diálogo
         self.path = None             # Path do Markdown aberto
+        self.is_pasted = False       # o documento veio da área de transferência
         self._monitor = None
         self._render_timer = 0
         self._rendering = False
@@ -49,6 +50,7 @@ class MainWindow(Adw.ApplicationWindow):
         self._pdf = None             # último PDF da prévia
         self._pdf_key = None         # (opções, datas dos arquivos) usadas nesse PDF
         self._last_export_dir = {}   # Markdown → pasta da última exportação
+        self._doc_title = ""         # título do documento (front matter ou primeiro H1)
 
         self.set_default_size(settings.get("window_width"), settings.get("window_height"))
         if settings.get("window_maximized"):
@@ -114,14 +116,22 @@ class MainWindow(Adw.ApplicationWindow):
         empty = Adw.StatusPage(
             icon_name="x-office-document-symbolic",
             title=_("Open a Markdown file"),
-            description=_("Drag a .md file here or click Open. The preview updates by itself "
-                          "whenever the file is saved."),
+            description=_("Drag a .md file here, click Open or paste Markdown text with "
+                          "Ctrl+V. The preview updates by itself whenever the file is saved."),
         )
         open_big = Gtk.Button(label=_("Open File…"), action_name="win.open",
                               halign=Gtk.Align.CENTER)
         open_big.add_css_class("pill")
         open_big.add_css_class("suggested-action")
-        empty.set_child(open_big)
+        paste_big = Gtk.Button(label=_("Paste Text"), action_name="win.paste",
+                               halign=Gtk.Align.CENTER,
+                               tooltip_text=_("Paste Markdown text from the clipboard (Ctrl+V)"))
+        paste_big.add_css_class("pill")
+        buttons = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12,
+                          halign=Gtk.Align.CENTER)
+        buttons.append(open_big)
+        buttons.append(paste_big)
+        empty.set_child(buttons)
 
         self.preview = PdfPreview()
         self.stack = Gtk.Stack(transition_type=Gtk.StackTransitionType.CROSSFADE)
@@ -164,6 +174,7 @@ class MainWindow(Adw.ApplicationWindow):
             ("zoom-out", lambda *_: self.preview.zoom_out()),
             ("zoom-fit", lambda *_: self.preview.zoom_fit()),
             ("clear-recent", self._on_clear_recent),
+            ("paste", self._on_paste),
         ):
             action = Gio.SimpleAction.new(name, None)
             action.connect("activate", callback)
@@ -180,7 +191,9 @@ class MainWindow(Adw.ApplicationWindow):
             self.lookup_action(name).set_enabled(has_doc and not (name == "export" and self.busy))
 
     def _setup_drop(self):
-        target = Gtk.DropTarget.new(Gdk.FileList, Gdk.DragAction.COPY)
+        # Arquivos (do gerenciador de arquivos) ou texto (selecionado em outro app)
+        target = Gtk.DropTarget.new(GObject.TYPE_NONE, Gdk.DragAction.COPY)
+        target.set_gtypes([Gdk.FileList, GObject.TYPE_STRING])
         target.connect("drop", self._on_drop)
         self.add_controller(target)
 
@@ -220,11 +233,74 @@ class MainWindow(Adw.ApplicationWindow):
         dialog.open(self, None, done)
 
     def _on_drop(self, _target, value, _x, _y):
-        files = value.get_files()
-        paths = [f.get_path() for f in files if f.get_path()]
+        if isinstance(value, str):
+            return self.open_text(value)
+        paths = [f.get_path() for f in value.get_files() if f.get_path()]
         if not paths:
             return False
         self.open_file(paths[0])
+        return True
+
+    # ------------------------------------------------- área de transferência
+    def _on_paste(self, *_args):
+        # Ctrl+V num campo de texto (ex.: tamanho da letra) cola no campo, não no app.
+        focus = self.get_focus()
+        if isinstance(focus, Gtk.Text):
+            focus.activate_action("clipboard.paste", None)
+            return
+
+        clipboard = self.get_clipboard()
+        formats = clipboard.get_formats()
+        if formats.contain_gtype(Gdk.FileList):
+            clipboard.read_value_async(Gdk.FileList, GLib.PRIORITY_DEFAULT, None,
+                                       self._on_clipboard_files)
+        else:
+            clipboard.read_text_async(None, self._on_clipboard_text)
+
+    def _on_clipboard_files(self, clipboard, result):
+        try:
+            files = clipboard.read_value_finish(result)
+        except GLib.Error as exc:
+            self.toast(_("Could not read the clipboard: {error}").format(error=exc.message), 5)
+            return
+        paths = [f.get_path() for f in files.get_files() if f.get_path()]
+        if paths:
+            self.open_file(paths[0])
+        else:
+            self.toast(_("Only local files can be opened."))
+
+    def _on_clipboard_text(self, clipboard, result):
+        try:
+            text = clipboard.read_text_finish(result)
+        except GLib.Error as exc:
+            log.debug("área de transferência sem texto: %s", exc.message)
+            text = None
+        if not text or not text.strip():
+            self.toast(_("The clipboard has no text to paste."))
+            return
+        self.open_text(text)
+
+    def open_text(self, text):
+        """Mostra um texto Markdown colado (gravado num arquivo temporário)."""
+        if not text.strip():
+            return False
+        # Um caminho de arquivo copiado como texto abre o próprio arquivo.
+        candidate = text.strip()
+        if "\n" not in candidate and len(candidate) < 4096:
+            if candidate.startswith("file://"):
+                candidate = Gio.File.new_for_uri(candidate).get_path() or ""
+            path = Path(candidate).expanduser()
+            if path.is_absolute() and converter.is_markdown(path) and path.is_file():
+                self.open_file(path)
+                return True
+        try:
+            path = pasted.save(text)
+        except OSError as exc:
+            self.toast(_("Could not save the pasted text: {error}").format(
+                error=exc.strerror or exc), 6)
+            return False
+        log.debug("texto colado salvo em %s (%d caracteres)", path, len(text))
+        self.open_file(path)
         return True
 
     def open_file(self, path):
@@ -238,9 +314,13 @@ class MainWindow(Adw.ApplicationWindow):
         changed = path != self.path
         self.path = path
         self._pdf = self._pdf_key = None
-        self.settings.add_recent(path)
-        self.settings.set("last_folder", str(path.parent))
-        self._update_recent_menu()
+        self.is_pasted = pasted.is_pasted(path)
+        if changed:
+            self._doc_title = ""
+        if not self.is_pasted:
+            self.settings.add_recent(path)
+            self.settings.set("last_folder", str(path.parent))
+            self._update_recent_menu()
         self._watch(path)
         self._update_title()
         self._update_actions()
@@ -275,16 +355,20 @@ class MainWindow(Adw.ApplicationWindow):
             self.window_title.set_subtitle("")
             self.set_title(APP_NAME)
             return
-        self.window_title.set_title(self.path.name)
-        subtitle = _short_path(self.path.parent)
+        name = _("Pasted text") if self.is_pasted else self.path.name
+        self.window_title.set_title(name)
+        subtitle = _("Clipboard") if self.is_pasted else _short_path(self.path.parent)
         if self.preview.pages:
             n = len(self.preview.pages)
             subtitle += " · " + ngettext("{n} page", "{n} pages", n).format(n=n)
         self.window_title.set_subtitle(subtitle)
-        self.set_title(f"{self.path.name} — {APP_NAME}")
+        self.set_title(f"{name} — {APP_NAME}")
 
     def _update_recent_menu(self):
         self.recent_menu.remove_all()
+        paste = Gio.Menu()
+        paste.append(_("Paste from Clipboard"), "win.paste")
+        self.recent_menu.append_section(None, paste)
         files = Gio.Menu()
         recent = [p for p in self.settings.get("recent_files") if isinstance(p, str)]
         for path in recent:
@@ -354,22 +438,26 @@ class MainWindow(Adw.ApplicationWindow):
         self._rendering = True
         self.spinner.set_visible(True)
         path, key = self.path, self._content_key()
+        fallback = self._fallback_title()
 
         def worker():
             try:
-                pdf, doc = converter.render(path, key[0])
-                result = (pdf, doc.warnings, None)
+                pdf, doc = converter.render(path, key[0], fallback)
+                result = (pdf, doc.warnings, doc.title, None)
             except converter.ConversionError as exc:
-                result = (None, [], str(exc))
+                result = (None, [], "", str(exc))
             except Exception as exc:  # noqa: BLE001
                 log.exception("erro inesperado ao gerar a prévia")
-                result = (None, [], _("Unexpected error: {error}").format(error=exc))
+                result = (None, [], "", _("Unexpected error: {error}").format(error=exc))
             GLib.idle_add(self._on_rendered, path, key, *result)
 
         threading.Thread(target=worker, daemon=True).start()
         return False
 
-    def _on_rendered(self, path, key, pdf, warnings, error):
+    def _fallback_title(self):
+        return _("Pasted text") if self.is_pasted else None
+
+    def _on_rendered(self, path, key, pdf, warnings, title, error):
         self._rendering = False
         self.spinner.set_visible(False)
         if path != self.path:  # outro arquivo foi aberto nesse meio-tempo
@@ -386,6 +474,7 @@ class MainWindow(Adw.ApplicationWindow):
                     error=exc.message), error=True)
             else:
                 self._pdf, self._pdf_key = pdf, key
+                self._doc_title = title
                 if warnings:
                     self._show_banner(" ".join(warnings[:3]) + (" …" if len(warnings) > 3 else ""))
                 else:
@@ -421,10 +510,19 @@ class MainWindow(Adw.ApplicationWindow):
         filters = Gio.ListStore.new(Gtk.FileFilter)
         filters.append(pdf_filter)
         dialog.set_filters(filters)
-        folder = self._last_export_dir.get(self.path, self.path.parent)
+        if self.is_pasted:
+            # Texto colado: nome a partir do título, pasta da última vez (ou Documentos)
+            documents = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOCUMENTS)
+            default_dir = Path(self.settings.get("last_folder") or documents or Path.home())
+            title = "" if self._doc_title == _("Pasted text") else self._doc_title
+            name = pasted.file_name_for(title, _("document")) + ".pdf"
+        else:
+            default_dir = self.path.parent
+            name = converter.default_output(self.path).name
+        folder = self._last_export_dir.get(self.path, default_dir)
         if folder.is_dir():
             dialog.set_initial_folder(Gio.File.new_for_path(str(folder)))
-        dialog.set_initial_name(converter.default_output(self.path).name)
+        dialog.set_initial_name(name)
 
         source = self.path
 
@@ -449,13 +547,15 @@ class MainWindow(Adw.ApplicationWindow):
         self._update_actions()
         self.export_button.set_label(_("Exporting…"))
         source, key = self.path, self._content_key()
+        fallback = self._fallback_title()
         cached = self._pdf if self._pdf_key == key else None
         log.debug("exportando %s → %s (%s)", source, target,
                   "prévia reaproveitada" if cached else "gerando de novo")
 
         def worker():
             try:
-                pdf = cached if cached is not None else converter.render(source, key[0])[0]
+                pdf = (cached if cached is not None
+                       else converter.render(source, key[0], fallback)[0])
                 converter.write_pdf(pdf, target)
                 error = None
             except converter.ConversionError as exc:

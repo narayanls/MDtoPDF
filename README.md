@@ -17,6 +17,7 @@ Interface em português (pt-BR) e em inglês para sistemas em outros idiomas.
 - Realce de sintaxe nos blocos de código.
 - Folha de estilo CSS própria, aplicada por cima do estilo escolhido.
 - Título, autor e palavras-chave do PDF tirados do front matter.
+- Colar texto Markdown da área de transferência (<kbd>Ctrl</kbd>+<kbd>V</kbd>), além de abrir arquivos.
 - Exportação pela linha de comando, sem abrir a janela.
 - Atualização automática a partir dos Releases do GitHub.
 
@@ -90,9 +91,12 @@ Sem o `make`, o app abre em inglês.
 
 Abra um arquivo pelo botão **Abrir**, arrastando-o para a janela ou pelo gerenciador de arquivos (**Abrir com → MDtoPDF**). Ajuste as opções no painel lateral e clique em **Exportar PDF**.
 
+Também dá para **colar** um texto Markdown com <kbd>Ctrl</kbd>+<kbd>V</kbd> (ou **Colar texto** na tela inicial, ou no menu do botão Abrir) e arrastar um texto selecionado em outro programa para a janela. O texto colado fica num arquivo temporário em `~/.cache/md-to-pdf/pasted/` (os 20 mais recentes são mantidos); para editá-lo, use **Menu → Abrir com outro aplicativo**, e a prévia acompanha. Imagens com caminho relativo não funcionam em texto colado, porque não há uma pasta de referência; use caminhos absolutos ou URLs. Se o que estiver copiado for um arquivo `.md` (copiado no gerenciador de arquivos), ele é aberto normalmente.
+
 | Atalho | Ação |
 |---|---|
 | <kbd>Ctrl</kbd>+<kbd>O</kbd> | Abrir arquivo |
+| <kbd>Ctrl</kbd>+<kbd>V</kbd> | Colar texto Markdown |
 | <kbd>Ctrl</kbd>+<kbd>E</kbd> | Exportar PDF |
 | <kbd>Ctrl</kbd>+<kbd>R</kbd> ou <kbd>F5</kbd> | Recarregar (ex.: depois de trocar uma imagem) |
 | <kbd>F9</kbd> | Mostrar/ocultar as opções |

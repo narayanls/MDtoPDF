@@ -17,6 +17,7 @@ The interface is in English, and in Portuguese (pt-BR) on Portuguese systems.
 - Syntax highlighting in code blocks.
 - Your own CSS stylesheet, applied on top of the chosen style.
 - PDF title, author and keywords taken from the front matter.
+- Paste Markdown text from the clipboard (<kbd>Ctrl</kbd>+<kbd>V</kbd>), besides opening files.
 - Command-line export, without opening the window.
 - Automatic updates from the GitHub Releases.
 
@@ -90,9 +91,12 @@ Without `make`, the app opens in English.
 
 Open a file with the **Open** button, by dragging it onto the window, or from the file manager (**Open With → MDtoPDF**). Adjust the options in the sidebar and click **Export PDF**.
 
+You can also **paste** Markdown text with <kbd>Ctrl</kbd>+<kbd>V</kbd> (or **Paste Text** on the start screen, or in the Open button menu) and drag selected text from another program onto the window. Pasted text is kept in a temporary file in `~/.cache/md-to-pdf/pasted/` (the 20 most recent are kept); to edit it, use **Menu → Open With Another App**, and the preview follows. Images with relative paths don't work in pasted text, since there is no reference folder; use absolute paths or URLs. If the clipboard holds a `.md` file (copied in the file manager), that file is opened.
+
 | Shortcut | Action |
 |---|---|
 | <kbd>Ctrl</kbd>+<kbd>O</kbd> | Open file |
+| <kbd>Ctrl</kbd>+<kbd>V</kbd> | Paste Markdown text |
 | <kbd>Ctrl</kbd>+<kbd>E</kbd> | Export PDF |
 | <kbd>Ctrl</kbd>+<kbd>R</kbd> or <kbd>F5</kbd> | Reload (e.g. after replacing an image) |
 | <kbd>F9</kbd> | Show/hide the options |

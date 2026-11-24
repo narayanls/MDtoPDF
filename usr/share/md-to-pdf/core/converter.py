@@ -311,8 +311,12 @@ def _document_language(meta) -> str:
     return "pt-BR" if current_language() == "pt_BR" else "en"
 
 
-def markdown_to_html(text: str, opts: ExportOptions, source=None) -> Document:
-    """Monta o HTML completo (com CSS) que vira o PDF."""
+def markdown_to_html(text: str, opts: ExportOptions, source=None, fallback_title=None) -> Document:
+    """Monta o HTML completo (com CSS) que vira o PDF.
+
+    fallback_title: título do PDF quando o texto não tem title nem H1 (sem ele,
+    vale o nome do arquivo).
+    """
     meta, body = split_front_matter(text)
     env = {}
     body_html = _parser(opts.highlight_code).render(body, env)
@@ -330,6 +334,7 @@ def markdown_to_html(text: str, opts: ExportOptions, source=None) -> Document:
     source = Path(source).resolve() if source else None
     title = (meta.get("title")
              or next((t for level, t, _a in headings if level == 1 and t), "")
+             or fallback_title
              or (source.stem if source else APP_NAME))
 
     head = [
@@ -412,9 +417,9 @@ def html_to_pdf(doc: Document) -> bytes:
             doc.warnings.extend(m for m in failures.messages if m not in doc.warnings)
 
 
-def render(source, opts: ExportOptions) -> tuple[bytes, Document]:
+def render(source, opts: ExportOptions, fallback_title=None) -> tuple[bytes, Document]:
     """Lê o Markdown e devolve (PDF, documento)."""
-    doc = markdown_to_html(read_markdown(source), opts, source)
+    doc = markdown_to_html(read_markdown(source), opts, source, fallback_title)
     return html_to_pdf(doc), doc
 
 
