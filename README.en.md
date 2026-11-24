@@ -124,25 +124,6 @@ The app checks the latest GitHub release when it opens (this can be turned off i
 
 When running from source, the app only announces the new version and points to GitHub.
 
-### Publishing a release
-
-1. Bump `APP_VERSION` in `usr/share/md-to-pdf/core/__init__.py` (the PKGBUILD reads the version from there).
-2. Build the package: `cd pkgbuild && makepkg -f`.
-3. Create a GitHub release with the tag `v<version>` (e.g. `v1.0.1`), write the release notes in the description and attach `md-to-pdf-<version>-1-any.pkg.tar.zst`.
-
-The release notes appear in the update dialog. To ship a packaging-only fix, bump `pkgrel` in the PKGBUILD: the updater compares `pkgrel` too.
-
-## Translations
-
-Texts are in English in the code; translations live in `po/`.
-
-```sh
-make update-po   # updates po/pt_BR.po with new texts from the code
-make stats       # shows how many texts are translated
-make             # compiles the .mo files to run without installing
-```
-
-To add a language: `msginit -i po/md-to-pdf.pot -l <code> -o po/<code>.po` and add the code to `po/LINGUAS`.
 
 ## License
 
