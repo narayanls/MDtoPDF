@@ -129,7 +129,7 @@ When running from source, the app only announces the new version and points to G
 - [Python 3](https://www.python.org) + [PyGObject](https://pygobject.gnome.org)
 - [GTK4](https://gtk.org) + [Adwaita (libadwaita)](https://gnome.pages.gitlab.gnome.org/libadwaita/)
 - Vibe Coding:
-  Claude Sonnet was used for generate code. MDtoPDF was revised and tested by humans.
+  Claude Opus was used for generate code. MDtoPDF was revised and tested by humans.
 
 ## License
 
