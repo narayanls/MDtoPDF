@@ -59,7 +59,7 @@ Funciona no Arch Linux e em derivados como CachyOS, EndeavourOS e Manjaro.
 2. Instale com o pacman, na pasta onde o arquivo foi salvo:
 
    ```sh
-   sudo pacman -U md-to-pdf-1.0.0-1-any.pkg.tar.zst
+   sudo pacman -U md-to-pdf-*.pkg.tar.zst
    ```
 
 O pacman instala as dependências (`python-gobject`, `gtk4`, `libadwaita`, `poppler-glib`, `python-weasyprint`, `python-markdown-it-py`, `python-mdit_py_plugins` e `python-pygments`). Depois, abra o **MDtoPDF** pelo menu de aplicativos ou rode `md-to-pdf` no terminal.
