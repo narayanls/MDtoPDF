@@ -70,6 +70,7 @@ class MDtoPDFApp(Adw.Application):
             ("win.open", ["<primary>o"]),
             ("win.export", ["<primary>e"]),
             ("win.paste", ["<primary>v"]),
+            ("win.close-document", ["<primary>w"]),
             ("win.reload", ["<primary>r", "F5"]),
             ("win.toggle-sidebar", ["F9"]),
             ("win.zoom-in", ["<primary>plus", "<primary>equal", "<primary>KP_Add"]),

@@ -76,13 +76,20 @@ class MainWindow(Adw.ApplicationWindow):
         self.open_button.set_menu_model(self.recent_menu)
         header.pack_start(self.open_button)
 
+        # Volta à tela inicial (só aparece com um documento aberto)
+        self.close_button = Gtk.Button(icon_name="window-close-symbolic",
+                                       action_name="win.close-document",
+                                       tooltip_text=_("Close document (Ctrl+W)"))
+        self.close_button.set_visible(False)
+        header.pack_start(self.close_button)
+
         self.window_title = Adw.WindowTitle(title=APP_NAME)
         header.set_title_widget(self.window_title)
 
         menu = Gio.Menu()
         section = Gio.Menu()
         section.append(_("Reload"), "win.reload")
-        section.append(_("Open With Another App…"), "win.open-with")
+        section.append(_("Close Document"), "win.close-document")
         menu.append_section(None, section)
         section = Gio.Menu()
         section.append(_("Preferences"), "app.preferences")
@@ -168,7 +175,7 @@ class MainWindow(Adw.ApplicationWindow):
             ("open", self._on_open),
             ("export", lambda *_: self.export()),
             ("reload", lambda *_: self.schedule_render(0)),
-            ("open-with", self._on_open_with),
+            ("close-document", lambda *_: self.close_document()),
             ("toggle-sidebar", lambda *_: self.split.set_show_sidebar(not self.split.get_show_sidebar())),
             ("zoom-in", lambda *_: self.preview.zoom_in()),
             ("zoom-out", lambda *_: self.preview.zoom_out()),
@@ -187,7 +194,8 @@ class MainWindow(Adw.ApplicationWindow):
 
     def _update_actions(self):
         has_doc = self.path is not None
-        for name in ("export", "reload", "open-with", "zoom-in", "zoom-out", "zoom-fit"):
+        self.close_button.set_visible(has_doc)
+        for name in ("export", "reload", "close-document", "zoom-in", "zoom-out", "zoom-fit"):
             self.lookup_action(name).set_enabled(has_doc and not (name == "export" and self.busy))
 
     def _setup_drop(self):
@@ -389,13 +397,32 @@ class MainWindow(Adw.ApplicationWindow):
         self.settings.set("recent_files", [])
         self._update_recent_menu()
 
-    def _on_open_with(self, *_args):
+    def close_document(self):
+        """Fecha o documento e volta à tela inicial (o texto colado é apagado)."""
         if self.path is None:
             return
-        launcher = Gtk.FileLauncher(file=Gio.File.new_for_path(str(self.path)))
-        if hasattr(launcher, "set_always_ask"):  # GTK >= 4.12: escolher o editor
-            launcher.set_always_ask(True)
-        launcher.launch(self, None, self._on_launched)
+        log.debug("fechando %s", self.path)
+        if self._render_timer:
+            GLib.source_remove(self._render_timer)
+            self._render_timer = 0
+        self._render_again = False  # uma prévia em andamento é descartada em _on_rendered
+        if self._monitor is not None:
+            self._monitor.cancel()
+            self._monitor = None
+        if self.is_pasted:
+            try:
+                self.path.unlink(missing_ok=True)
+            except OSError as exc:
+                log.debug("não foi possível apagar %s: %s", self.path, exc)
+        self.path = None
+        self.is_pasted = False
+        self._pdf = self._pdf_key = None
+        self._doc_title = ""
+        self.preview.clear()
+        self._hide_banner()
+        self.stack.set_visible_child_name("empty")
+        self._update_title()
+        self._update_actions()
 
     def _on_launched(self, launcher, result):
         try:
@@ -460,6 +487,9 @@ class MainWindow(Adw.ApplicationWindow):
     def _on_rendered(self, path, key, pdf, warnings, title, error):
         self._rendering = False
         self.spinner.set_visible(False)
+        if self.path is None:  # documento fechado nesse meio-tempo
+            self._render_again = False
+            return False
         if path != self.path:  # outro arquivo foi aberto nesse meio-tempo
             self._render_again = False
             self.schedule_render(0)
