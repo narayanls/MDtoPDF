@@ -110,8 +110,8 @@ class UpdateController:
         reasons = {
             "source": _("{app} is running from the source code, so it can't update itself. "
                         "Download the new version from GitHub.").format(app=APP_NAME),
-            "pacman": _("Automatic installation requires pacman (Arch Linux). "
-                        "Download the new version from GitHub."),
+            "manager": _("Automatic installation requires pacman (Arch Linux) or apt "
+                         "(Debian, Ubuntu). Download the new version from GitHub."),
             "pkexec": _("Automatic installation requires pkexec (polkit). "
                         "Download the new version from GitHub."),
             "asset": _("This release has no package to install. "

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: md-to-pdf 1.0.0\n"
 "Report-Msgid-Bugs-To: https://github.com/narayanls/MDtoPDF/issues\n"
-"POT-Creation-Date: 2026-11-26 20:41-0300\n"
+"POT-Creation-Date: 2026-11-26 21:34-0300\n"
 "PO-Revision-Date: 2026-11-24 15:22-0300\n"
 "Last-Translator: narayanls\n"
 "Language-Team: Portuguese (Brazil)\n"
@@ -78,56 +78,56 @@ msgstr "Não foi possível criar o PDF: {error}"
 msgid "Could not save {name}: {error}"
 msgstr "Não foi possível salvar {name}: {error}"
 
-#: usr/share/md-to-pdf/core/updater.py:122
+#: usr/share/md-to-pdf/core/updater.py:166
 msgid "No release has been published yet."
 msgstr "Nenhum release foi publicado ainda."
 
-#: usr/share/md-to-pdf/core/updater.py:124
+#: usr/share/md-to-pdf/core/updater.py:168
 msgid "GitHub is limiting requests right now. Try again later."
 msgstr "O GitHub está limitando as consultas agora. Tente mais tarde."
 
-#: usr/share/md-to-pdf/core/updater.py:125
+#: usr/share/md-to-pdf/core/updater.py:169
 #, python-brace-format
 msgid "Could not check for updates (HTTP {code})."
 msgstr "Não foi possível verificar atualizações (HTTP {code})."
 
-#: usr/share/md-to-pdf/core/updater.py:129
+#: usr/share/md-to-pdf/core/updater.py:173
 msgid "Could not check for updates. Check your internet connection."
 msgstr ""
 "Não foi possível verificar atualizações. Confira sua conexão com a internet."
 
-#: usr/share/md-to-pdf/core/updater.py:151
+#: usr/share/md-to-pdf/core/updater.py:205
 msgid "The latest release has no version number."
 msgstr "O último release não tem número de versão."
 
-#: usr/share/md-to-pdf/core/updater.py:177
+#: usr/share/md-to-pdf/core/updater.py:240
 msgid "This release has no package to install."
 msgstr "Este release não tem pacote para instalar."
 
-#: usr/share/md-to-pdf/core/updater.py:207
+#: usr/share/md-to-pdf/core/updater.py:270
 msgid "The download failed. Check your internet connection."
 msgstr "O download falhou. Confira sua conexão com a internet."
 
-#: usr/share/md-to-pdf/core/updater.py:211
+#: usr/share/md-to-pdf/core/updater.py:274
 msgid "The download is incomplete. Try again."
 msgstr "O download ficou incompleto. Tente de novo."
 
-#: usr/share/md-to-pdf/core/updater.py:214
+#: usr/share/md-to-pdf/core/updater.py:277
 msgid "The downloaded file is corrupted (checksum mismatch). Try again."
 msgstr ""
 "O arquivo baixado está corrompido (checksum não confere). Tente de novo."
 
-#: usr/share/md-to-pdf/core/updater.py:223
-msgid "Automatic installation requires pacman and pkexec."
-msgstr "A instalação automática precisa do pacman e do pkexec."
+#: usr/share/md-to-pdf/core/updater.py:288
+msgid "Automatic installation requires pacman or apt, and pkexec."
+msgstr "A instalação automática requer pacman ou apt, e pkexec."
 
-#: usr/share/md-to-pdf/core/updater.py:233
+#: usr/share/md-to-pdf/core/updater.py:303
 msgid "Authorization was not granted."
 msgstr "A autorização não foi concedida."
 
-#: usr/share/md-to-pdf/core/updater.py:236
-msgid "pacman could not install the update:"
-msgstr "O pacman não conseguiu instalar a atualização:"
+#: usr/share/md-to-pdf/core/updater.py:306
+msgid "The package manager could not install the update:"
+msgstr "O gerenciador de pacotes não conseguiu instalar a atualização:"
 
 #: usr/share/md-to-pdf/main.py:18
 #, python-brace-format
@@ -386,11 +386,11 @@ msgstr ""
 
 #: usr/share/md-to-pdf/ui/updates.py:113
 msgid ""
-"Automatic installation requires pacman (Arch Linux). Download the new "
-"version from GitHub."
+"Automatic installation requires pacman (Arch Linux) or apt (Debian, Ubuntu). "
+"Download the new version from GitHub."
 msgstr ""
-"A instalação automática precisa do pacman (Arch Linux). Baixe a versão nova "
-"no GitHub."
+"A instalação automática requer pacman (Arch Linux) ou apt (Debian, Ubuntu). "
+"Baixe a nova versão no GitHub."
 
 #: usr/share/md-to-pdf/ui/updates.py:115
 msgid ""

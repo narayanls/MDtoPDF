@@ -3,16 +3,19 @@
 Fluxo:
   1. fetch_latest() consulta a API do GitHub e devolve o último release
      (rascunhos e pré-lançamentos são ignorados pela própria API).
-  2. A versão do release vem do nome do pacote anexado
-     (md-to-pdf-<pkgver>-<pkgrel>-any.pkg.tar.zst); se não houver pacote,
-     usa a tag (v1.2.0 ou 1.2.0). is_newer() compara com installed_version(),
-     que pergunta ao pacman o que está de fato instalado.
+  2. package_system() descobre se o app veio do pacote do Arch ou do .deb, e a
+     versão do release vem do pacote anexado para esse sistema:
+       Arch    md-to-pdf-<pkgver>-<pkgrel>-any.pkg.tar.zst
+       Debian  md-to-pdf_<versão>-<revisão>_all.deb
+     Se não houver pacote, usa a tag (v1.2.0 ou 1.2.0). is_newer() compara com
+     installed_version(), que pergunta ao pacman/dpkg o que está instalado.
   3. download() baixa o pacote para ~/.cache/md-to-pdf/updates e confere o
      tamanho e o SHA-256 informados pelo GitHub.
-  4. install() instala com "pkexec pacman -U", que pede a senha numa janela
-     do sistema (polkit).
+  4. install() instala com "pkexec pacman -U" ou "pkexec apt-get install",
+     que pedem a senha numa janela do sistema (polkit).
 """
 
+import functools
 import hashlib
 import json
 import os
@@ -37,8 +40,13 @@ INSTALL_DIR = Path("/usr/share") / APP_SLUG
 TIMEOUT = 20
 CHUNK = 64 * 1024
 
-PACKAGE_RE = re.compile(
-    rf"^{re.escape(APP_SLUG)}-(?P<pkgver>[^-]+)-(?P<pkgrel>[^-]+)-any\.pkg\.tar\.(?:zst|xz)$")
+# Pacote anexado ao release para cada sistema.
+PACKAGE_RE = {
+    "arch": re.compile(
+        rf"^{re.escape(APP_SLUG)}-(?P<pkgver>[^-]+)-(?P<pkgrel>[^-]+)-any\.pkg\.tar\.(?:zst|xz)$"),
+    "deb": re.compile(
+        rf"^{re.escape(APP_SLUG)}_(?P<pkgver>[^-_]+)(?:-(?P<pkgrel>[^_]+))?_all\.deb$"),
+}
 
 
 class UpdateError(Exception):
@@ -79,21 +87,57 @@ def is_newer(remote: str, local: str) -> bool:
     return r_rel is not None and l_rel is not None and r_rel > l_rel
 
 
+def _run(argv: list[str]) -> subprocess.CompletedProcess | None:
+    try:
+        return subprocess.run(argv, capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+
+
+def _query_installed(system: str | None) -> str | None:
+    """Versão do pacote instalado segundo o pacman ou o dpkg (ex.: '1.2.0-1')."""
+    if system == "arch" and shutil.which("pacman"):
+        result = _run(["pacman", "-Q", APP_SLUG])
+        parts = result.stdout.split() if result else []
+        if result and result.returncode == 0 and len(parts) == 2:
+            return parts[1]
+    elif system == "deb" and shutil.which("dpkg-query"):
+        result = _run(["dpkg-query", "-W", "-f=${Status}\t${Version}", APP_SLUG])
+        if result and result.returncode == 0:
+            status, _sep, version = result.stdout.partition("\t")
+            if status.endswith(" installed") and version.strip():
+                return version.strip()
+    return None
+
+
+@functools.cache
+def package_system() -> str | None:
+    """'arch', 'deb' ou None (nenhum dos dois gerenciadores).
+
+    Primeiro pergunta a qual gerenciador o app instalado pertence (o Arch pode
+    ter o dpkg do AUR instalado, por exemplo); sem resposta, vale o gerenciador
+    disponível.
+    """
+    for system in ("arch", "deb"):
+        if _query_installed(system):
+            return system
+    if shutil.which("pacman"):
+        return "arch"
+    if shutil.which("dpkg"):
+        return "deb"
+    return None
+
+
 def installed_version() -> str:
-    """Versão instalada segundo o pacman (ex.: '1.2.0-1').
+    """Versão instalada segundo o pacman/dpkg (ex.: '1.2.0-1').
 
     É a fonte confiável: não depende do código já carregado na memória.
-    Rodando pelo código-fonte (ou sem pacman), usa a constante APP_VERSION.
+    Rodando pelo código-fonte (ou sem gerenciador), usa a constante APP_VERSION.
     """
-    if install_support() != "source" and shutil.which("pacman"):
-        try:
-            result = subprocess.run(["pacman", "-Q", APP_SLUG],
-                                    capture_output=True, text=True, timeout=10)
-            parts = result.stdout.split()
-            if result.returncode == 0 and len(parts) == 2:
-                return parts[1]
-        except (OSError, subprocess.TimeoutExpired):
-            pass
+    if install_support() != "source":
+        version = _query_installed(package_system())
+        if version:
+            return version
     return APP_VERSION
 
 
@@ -135,17 +179,27 @@ def fetch_latest() -> Release:
         page_url=str(data.get("html_url") or RELEASES_PAGE),
         notes=str(data.get("body") or "").strip(),
     )
+    # Pacote do sistema atual; os dos outros sistemas só servem para ler a versão.
+    system = package_system()
+    order = [system] + [s for s in PACKAGE_RE if s != system] if system else list(PACKAGE_RE)
+    found = {}
     for asset in data.get("assets") or []:
-        match = PACKAGE_RE.match(str(asset.get("name", "")))
-        if not match:
+        for kind, regex in PACKAGE_RE.items():
+            match = regex.match(str(asset.get("name", "")))
+            if match and kind not in found:
+                found[kind] = (asset, match)
+    for kind in order:
+        if kind not in found:
             continue
-        digest = str(asset.get("digest") or "")
+        asset, match = found[kind]
         release.version = match["pkgver"]
-        release.full_version = f'{match["pkgver"]}-{match["pkgrel"]}'
-        release.asset_name = asset["name"]
-        release.asset_url = asset.get("browser_download_url")
-        release.asset_size = int(asset.get("size") or 0)
-        release.sha256 = digest[7:].lower() if digest.startswith("sha256:") else None
+        release.full_version = match["pkgver"] + (f'-{match["pkgrel"]}' if match["pkgrel"] else "")
+        if kind == system:
+            digest = str(asset.get("digest") or "")
+            release.asset_name = asset["name"]
+            release.asset_url = asset.get("browser_download_url")
+            release.asset_size = int(asset.get("size") or 0)
+            release.sha256 = digest[7:].lower() if digest.startswith("sha256:") else None
         break
     if not release.version:
         raise UpdateError(_("The latest release has no version number."))
@@ -154,13 +208,22 @@ def fetch_latest() -> Release:
 
 
 # --------------------------------------------------------------- instalação
+def _manager(system: str | None) -> str | None:
+    """Programa que instala o pacote baixado: pacman (Arch) ou apt-get (Debian)."""
+    if system == "arch":
+        return shutil.which("pacman")
+    if system == "deb":
+        return shutil.which("apt-get")
+    return None
+
+
 def install_support() -> str:
-    """'ok' ou o motivo de não poder instalar: 'source', 'pacman', 'pkexec'."""
+    """'ok' ou o motivo de não poder instalar: 'source', 'manager', 'pkexec'."""
     here = Path(__file__).resolve().parent.parent
     if here != INSTALL_DIR:
         return "source"
-    if not shutil.which("pacman"):
-        return "pacman"
+    if not _manager(package_system()):
+        return "manager"
     if not shutil.which("pkexec"):
         return "pkexec"
     return "ok"
@@ -217,14 +280,21 @@ def download(release: Release, progress=None, cancel: threading.Event | None = N
 
 
 def install(package: Path) -> None:
-    """Instala o pacote com pacman, pedindo a senha de administrador via polkit."""
-    pkexec, pacman = shutil.which("pkexec"), shutil.which("pacman")
-    if not pkexec or not pacman:
-        raise UpdateError(_("Automatic installation requires pacman and pkexec."))
+    """Instala o pacote com pacman ou apt-get, pedindo a senha via polkit."""
+    # Caminhos absolutos: o pkexec não herda o PATH.
+    system = package_system()
+    pkexec, manager = shutil.which("pkexec"), _manager(system)
+    if not pkexec or not manager:
+        raise UpdateError(_("Automatic installation requires pacman or apt, and pkexec."))
+    if system == "deb":
+        # O apt resolve as dependências novas que a versão nova precisar.
+        argv = [pkexec, manager, "install", "-y", str(package.resolve())]
+    else:
+        argv = [pkexec, manager, "-U", "--noconfirm", str(package)]
+    log.debug("atualização: %s", " ".join(argv))
     try:
         try:
-            result = subprocess.run([pkexec, pacman, "-U", "--noconfirm", str(package)],
-                                    capture_output=True, text=True)
+            result = subprocess.run(argv, capture_output=True, text=True)
         except OSError as exc:
             raise UpdateError(str(exc)) from exc
         if result.returncode in (126, 127):
@@ -233,6 +303,7 @@ def install(package: Path) -> None:
             raise UpdateError(_("Authorization was not granted.") + (f"\n{detail}" if detail else ""))
         if result.returncode != 0:
             output = (result.stderr.strip() or result.stdout.strip()).splitlines()
-            raise UpdateError(_("pacman could not install the update:") + "\n" + "\n".join(output[-6:]))
+            raise UpdateError(_("The package manager could not install the update:")
+                              + "\n" + "\n".join(output[-6:]))
     finally:
         package.unlink(missing_ok=True)

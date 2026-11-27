@@ -72,6 +72,19 @@ Para remover:
 sudo pacman -R md-to-pdf
 ```
 
+### Pacote .deb (Debian, Ubuntu e derivados)
+
+Requer **Ubuntu 24.04**, **Debian 13** ou mais novos (o app precisa do GTK 4.10 e da libadwaita 1.4). Funciona também em derivados dessas versões, como Linux Mint 22 e Pop!_OS 24.04.
+
+1. Baixe o arquivo `md-to-pdf_<versão>-1_all.deb` na página de [Releases](https://github.com/narayanls/MDtoPDF/releases/latest).
+2. Instale com **duplo clique** no arquivo ou com:
+
+   ```sh
+   sudo apt install ./md-to-pdf_*.deb
+   ```
+
+O apt instala as dependências (`python3-gi`, `gir1.2-gtk-4.0`, `gir1.2-adw-1`, `gir1.2-poppler-0.18`, `weasyprint`, `python3-markdown-it`, `python3-mdit-py-plugins` e `python3-pygments`). Para remover: `sudo apt remove md-to-pdf`.
+
 ### Compilar a partir do código-fonte
 
 ```sh
